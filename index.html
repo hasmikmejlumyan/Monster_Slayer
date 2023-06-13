@@ -23,18 +23,31 @@
             <div class="healthbar__value" :style="playerBarStyles"></div>
         </section>
 
+        <section class="container" v-if="winner">
+            <h2>Game over !</h2>
+            <h3 v-if="winner === 'monster'">You lost !</h3>
+            <h3 v-else-if="winner === 'player'">You won !</h3>
+            <h3 v-else>It's a drew !</h3>
+
+            <button @click="startGame">Start New Game</button>
+        </section>
+
     <!-- Button section -->
 
-        <section id="controls">
+        <section id="controls" v-else>
             <button @click="attackMonster">ATTACK</button>
             <button :disabled="mayUseSpecialAttack" @click="specialAttackMonster">SPECIAL ATTACK</button>
             <button @click="healPlayer">HEAL</button>
-            <button>SURRENDED</button>
+            <button @click="surrender">SURRENDED</button>
         </section>
 
         <section id="log" class="container">
             <h2>Battle log</h2>
-            <ul></ul>
+            <ul>
+                <li v-for="logMessage in logMessages">
+                    {{ logMessage.actionBy }} - {{ logMessage.actionType }} - {{ logMessage.actionValue }}
+                </li>
+            </ul>
         </section>
     </div>
 </body>
